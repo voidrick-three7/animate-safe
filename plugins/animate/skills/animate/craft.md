@@ -80,6 +80,6 @@ Each rule was learned the hard way on a real piece. Follow them unless the user 
 
 ## References
 - **Reference media stays local and uncommitted** — it's other people's work, kept for study.
-- **Measure a reference into a timed table before writing** (`tools/measure/shotlog.py`; pass the real fps): cuts, holds, what's on screen, the loudest moment, the silence.
+- **Measure a reference into a timed table before writing** (`tools/measure/shotlog.mjs`; pass the real fps): cuts, holds, what's on screen, the loudest moment, the silence.
 - **Map its beats to the new subject; don't reskin them.** Find its thesis, its spine, its problem and its callback, and give each a true counterpart.
 - **Compare proportions, not pixels** (element width as % of frame) when matching a look.

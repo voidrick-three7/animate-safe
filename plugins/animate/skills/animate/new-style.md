@@ -22,7 +22,7 @@ Use this when the user names or shows a look that no style in [styles/](styles/R
 | **Fill and texture** | flat, gradient, halftone, hatch, grain, paper; shadows (none, drop, cast, hatched). |
 | **Geometry** | perspective (flat, isometric 2:1, true 3D), corner rounding, how text is set (font class, size as % of height). |
 | **Motion** | on 1s or 2s (step through 12 consecutive frames: do lines jitter in pairs?); easing (springs, ease-in-out, linear); what moves when nothing happens (idle). |
-| **Cuts** | `python tools/measure/shotlog.py ref.mp4` (it reads the real fps; `--fps N` overrides) for cut times; then hard cuts, morphs or one continuous move; a beat grid? (see grammar/FORMATS.md → Measuring a reference). |
+| **Cuts** | `node tools/measure/shotlog.mjs ref.mp4` (it reads the real fps; `--fps N` overrides) for cut times; then hard cuts, morphs or one continuous move; a beat grid? (see grammar/FORMATS.md → Measuring a reference). |
 | **Camera** | still, slow push, pans between stations, zoom bumps. |
 | **Composition** | how much of the frame is empty; one subject or a full-bleed world; where text sits. |
 

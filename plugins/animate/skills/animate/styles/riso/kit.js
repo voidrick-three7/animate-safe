@@ -73,13 +73,24 @@ function parseRGB(c) {
 }
 function tonesOf(c) {
   const key = String(c); if (TONES_OF.has(key)) return TONES_OF.get(key);
-  const want = parseRGB(c); let best = null, bd = 1e18;
-  for (let a = 0; a <= 20; a++) for (let b = 0; b <= 20; b++) for (let y = 0; y <= 20; y++) {
-    const t = { teal: a / 20, pink: b / 20, yellow: y / 20 }, rgb = inkRGB(t);
-    const d = (rgb[0] - want[0]) ** 2 + (rgb[1] - want[1]) ** 2 + (rgb[2] - want[2]) ** 2;
-    if (d < bd) { bd = d; best = t; }
+  const want = parseRGB(c);
+  let best = null;
+  let bd = 1e18;
+  for (let a = 0; a <= 20; a++) {
+    for (let b = 0; b <= 20; b++) {
+      for (let y = 0; y <= 20; y++) {
+        const t = { teal: a / 20, pink: b / 20, yellow: y / 20 };
+        const rgb = inkRGB(t);
+        const d = (rgb[0] - want[0]) ** 2 + (rgb[1] - want[1]) ** 2 + (rgb[2] - want[2]) ** 2;
+        if (d < bd) {
+          bd = d;
+          best = t;
+        }
+      }
+    }
   }
-  TONES_OF.set(key, best); return best;
+  TONES_OF.set(key, best);
+  return best;
 }
 const rgbHex = (rgb) => '#' + rgb.map((v) => Math.round(clamp(v, 0, 255)).toString(16).padStart(2, '0')).join('');
 
@@ -224,19 +235,79 @@ function printLayer() {
     return c < 0 ? 0 : c > 1 ? 1 : c;
   };
   for (let y = 0; y < h; y++) {
-    const Y = y0 + y, dy = Y - T.y, dx0 = x0 - T.x, row = Y * W;
-    let u0 = dx0 * c0 + dy * s0, v0 = dy * c0 - dx0 * s0, u1 = dx0 * c1 + dy * s1, v1 = dy * c1 - dx0 * s1, u2 = dx0 * c2 + dy * s2, v2 = dy * c2 - dx0 * s2;
-    for (let x = 0, i4 = y * w * 4; x < w; x++, i4 += 4, u0 += c0, v0 -= s0, u1 += c1, v1 -= s1, u2 += c2, v2 -= s2) {
-      const t0 = pl0[i4], t1 = pl1[i4], t2 = pl2[i4];
-      const mk = m ? m[i4] : (t0 | t1 | t2) > 6 ? 255 : 0;
-      if (mk === 0) continue;
-      const X = x0 + x, o = (row + X) * 4, dr = drop[row + X];
-      let r = pp[o], gg = pp[o + 1], b = pp[o + 2];
-      if (t0 >= 7 && !(dr & 1)) { const k = cov(LV[t0], u0, v0); r *= 1 - k * a00; gg *= 1 - k * a01; b *= 1 - k * a02; }
-      if (t1 >= 7 && !(dr & 2)) { const k = cov(LV[t1], u1, v1); r *= 1 - k * a10; gg *= 1 - k * a11; b *= 1 - k * a12; }
-      if (t2 >= 7 && !(dr & 4)) { const k = cov(LV[t2], u2, v2); r *= 1 - k * a20; gg *= 1 - k * a21; b *= 1 - k * a22; }
-      if (mk === 255) { out[o] = r; out[o + 1] = gg; out[o + 2] = b; }
-      else { const a = mk / 255; out[o] += (r - out[o]) * a; out[o + 1] += (gg - out[o + 1]) * a; out[o + 2] += (b - out[o + 2]) * a; }
+    const Y = y0 + y;
+    const dy = Y - T.y;
+    const dx0 = x0 - T.x;
+    const row = Y * W;
+    let u0 = dx0 * c0 + dy * s0;
+    let v0 = dy * c0 - dx0 * s0;
+    let u1 = dx0 * c1 + dy * s1;
+    let v1 = dy * c1 - dx0 * s1;
+    let u2 = dx0 * c2 + dy * s2;
+    let v2 = dy * c2 - dx0 * s2;
+
+    for (let x = 0; x < w; x++) {
+      const i4 = (y * w + x) * 4;
+      const t0 = pl0[i4];
+      const t1 = pl1[i4];
+      const t2 = pl2[i4];
+      let mk = 0;
+      if (m) {
+        mk = m[i4];
+      } else if (t0 > 6 || t1 > 6 || t2 > 6) {
+        mk = 255;
+      }
+      if (mk === 0) {
+        u0 += c0; v0 -= s0;
+        u1 += c1; v1 -= s1;
+        u2 += c2; v2 -= s2;
+        continue;
+      }
+
+      const X = x0 + x;
+      const o = (row + X) * 4;
+      const dr = drop[row + X];
+      let r = pp[o];
+      let gg = pp[o + 1];
+      let b = pp[o + 2];
+
+      const dropTeal = (dr & 1) !== 0;
+      const dropPink = (dr & 2) !== 0;
+      const dropYellow = (dr & 4) !== 0;
+
+      if (t0 >= 7 && !dropTeal) {
+        const k = cov(LV[t0], u0, v0);
+        r *= 1 - k * a00;
+        gg *= 1 - k * a01;
+        b *= 1 - k * a02;
+      }
+      if (t1 >= 7 && !dropPink) {
+        const k = cov(LV[t1], u1, v1);
+        r *= 1 - k * a10;
+        gg *= 1 - k * a11;
+        b *= 1 - k * a12;
+      }
+      if (t2 >= 7 && !dropYellow) {
+        const k = cov(LV[t2], u2, v2);
+        r *= 1 - k * a20;
+        gg *= 1 - k * a21;
+        b *= 1 - k * a22;
+      }
+
+      if (mk === 255) {
+        out[o] = r;
+        out[o + 1] = gg;
+        out[o + 2] = b;
+      } else {
+        const alpha = mk / 255;
+        out[o] += (r - out[o]) * alpha;
+        out[o + 1] += (gg - out[o + 1]) * alpha;
+        out[o + 2] += (b - out[o + 2]) * alpha;
+      }
+
+      u0 += c0; v0 -= s0;
+      u1 += c1; v1 -= s1;
+      u2 += c2; v2 -= s2;
     }
   }
 }

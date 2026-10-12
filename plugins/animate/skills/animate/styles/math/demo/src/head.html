@@ -15,10 +15,10 @@
 <script>
 "use strict";
 // =====================================================================
-//  MATH DEMO — 9:16, 6.0s @ 120 BPM, 24fps, motion on 1s. a² + b² = c² is written and drawn as a 4-3-5 triangle
-//  with its squares (16 + 9 = 25 cells); the square on c morphs into the unit circle, where a and b become cos θ and
-//  sin θ and the equation Transforms into cos²θ + sin²θ = 1 while a live readout keeps summing to 1.
-//  Colour code (one colour per quantity, everywhere): a / cos θ red, b / sin θ green, c / 1 yellow, θ blue.
+//  MATH DEMO -- 9:16, 6.0s @ 120 BPM, 24fps, motion on 1s. a^2 + b^2 = c^2 is written and drawn as a 4-3-5 triangle
+//  with its squares (16 + 9 = 25 cells); the square on c morphs into the unit circle, where a and b become cos(theta) and
+//  sin(theta) and the equation Transforms into cos^2(theta) + sin^2(theta) = 1 while a live readout keeps summing to 1.
+//  Colour code (one colour per quantity, everywhere): a / cos(theta) red, b / sin(theta) green, c / 1 yellow, theta blue.
 //  Build: node <skill>/tools/build.mjs <skill>/styles/math/demo
 // =====================================================================
 const FPS = 24, W = 1080, H = 1920;
@@ -32,8 +32,8 @@ const CX = 500;   // caption centre x: the middle of the safe area (x 60-940)
 
 const ERA_LIST = [[0, 3, () => scenePythagoras()], [3, 6, () => sceneCircle()]];
 const SHOTS = [
-  ['pythagoras', 0, 0.0, 3.0, 'a² + b² = c², written and drawn: 16 + 9 = 25 cells'],
-  ['circle',     1, 3.0, 6.0, 'the square on c becomes the unit circle: cos²θ + sin²θ = 1'],
+  ['pythagoras', 0, 0.0, 3.0, 'a^2 + b^2 = c^2, written and drawn: 16 + 9 = 25 cells'],
+  ['circle',     1, 3.0, 6.0, 'the square on c becomes the unit circle: cos^2(theta) + sin^2(theta) = 1'],
 ];
 const TIMELINE = {
   width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
@@ -48,7 +48,7 @@ const TIMELINE = {
   ],
   board: [
     { t: 2.1, title: 'the areas add up', sound: 'plucks on each square, a chime on the flash', next: 'the square on c becomes a circle' },
-    { t: 5.2, title: 'cos²θ + sin²θ = 1', sound: 'a pad, soft ticks while θ sweeps', next: 'loops' },
+    { t: 5.2, title: 'cos^2(theta) + sin^2(theta) = 1', sound: 'a pad, soft ticks while theta sweeps', next: 'loops' },
   ],
   narration: [],
 };

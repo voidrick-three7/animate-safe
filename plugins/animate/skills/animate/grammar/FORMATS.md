@@ -120,4 +120,4 @@ Every piece is one choice from each column. Read a format as a proven combinatio
 
 ## Measuring a reference
 
-`tools/measure/shotlog.py` misreads three kinds of footage: animation on 2s hides real cuts, dissolves of 6–8 frames read as one hard cut, and windows that straddle a cut look like stepping. For cut counts use a coarse 16×16 colour diff; for grids, test the specific BPM against chance (the fraction of a frame window over the grid period). Pass the real fps.
+`tools/measure/shotlog.mjs` misreads three kinds of footage: animation on 2s hides real cuts, dissolves of 6-8 frames read as one hard cut, and windows that straddle a cut look like stepping. For cut counts use a coarse 16x16 colour diff; for grids, test the specific BPM against chance (the fraction of a frame window over the grid period). Pass the real fps.

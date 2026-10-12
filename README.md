@@ -57,7 +57,7 @@ Each style folder has a `STYLE.md` (its rules, palette, motion habits and a fram
 Requirements: [Claude Code](https://code.claude.com), Node 18+, [Playwright](https://playwright.dev) with Chromium, and ffmpeg on your PATH. Fonts are local system fonts with fallbacks for Windows, macOS and Linux. For voice-overs: Python with `faster-whisper` (word timing) and, optionally, the ElevenLabs connector in Claude (Settings → Connectors) for the voice.
 
 ```bash
-npm i -g playwright && npx playwright install chromium
+npm install && npm run install:browsers
 ```
 
 As a plugin:

@@ -8,7 +8,7 @@ argument-hint: "[what the video is about] [style or reference]"
 
 You make short animated videos in code: one `<canvas>`, drawn and scored procedurally, deterministic frame by frame, rendered with a headless browser and ffmpeg. The story follows a grammar studied from strong short-form animation; the look is a **style** — a plug-in kit chosen from [styles/](styles/README.md) or made from the user's references with [new-style.md](new-style.md).
 
-**Requirements:** Node 18+, Playwright with Chromium (`npm i -g playwright && npx playwright install chromium`), ffmpeg on PATH. Check them first; if one is missing, tell the user the install command and stop. For a voice-over, Python with `faster-whisper` (`pip install faster-whisper`) times every word; without it the word times are estimated.
+**Requirements:** Node 18+, Playwright with Chromium (`npm install && npm run install:browsers`), ffmpeg on PATH. Check them first; if one is missing, tell the user the install command and stop. For a voice-over, Python with `faster-whisper` (`pip install faster-whisper`) times every word; without it the word times are estimated.
 
 All paths below are relative to this skill's base directory. Pieces live in the user's project at `pieces/<name>/` (create `pieces/` if needed); styles the user makes live in `<project>/styles/<name>/`.
 
@@ -127,7 +127,7 @@ A 45–60s piece has 10–15 scenes; split the drawing across agents once the st
 | `kit/board.js` | the storyboard renderer | steps 2–3 |
 | `kit/score-*.js` | synth (pluck, pad, drone, bass, sub, noiseHit, sweep, riser, chime, blip), loudness stage | scoring |
 | [templates/](templates/) | `piece/` (an 8s cut-paper morph), `beat-cut/` (a 6s hard-cut piece with a 16th rush), `style/` (a blank style kit for new looks) | step 2 |
-| `tools/` | build, tile, still, storyboard, export, review, textcheck, compare (reference vs frame), gallery, framehash (pixel-identity check), beats (a supplied track's beat map), capture (screenshots of the user's site), voice (a voice-over's lines and word times); `measure/` for references (`refs.mjs` for stills, `shotlog.py` for video) | throughout |
+| `tools/` | build, tile, still, storyboard, export, review, textcheck, compare (reference vs frame), gallery, framehash (pixel-identity check), beats (a supplied track's beat map), capture (screenshots of the user's site), voice (a voice-over's lines and word times); `measure/` for references (`refs.mjs` for stills, `shotlog.mjs` for video) | throughout |
 | [examples/history-of-ai/](examples/history-of-ai/) | a full 60s worked example (cut paper) | when unsure how something fits |
 
 ## Honesty about what's proven

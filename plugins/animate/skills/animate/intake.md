@@ -44,5 +44,11 @@ Ask only what you can't infer from the request. AskUserQuestion takes up to 4 qu
 ## Defaults when unanswered
 9:16, 1080×1920, 24fps, 120 BPM (an 8th = 6 frames exactly), 30–60s, music only (composed in code), no assets, the style that fits the subject (cut paper if unsure), the style's own hero, format chosen from FORMATS.md by the plot engine.
 
-## Pick the format yourself
-Don't ask the user to choose a story format — it's grammar, not taste. A history or a process over time → chronology joined by shape morphs (F2). Someone wants something and a helper solves it → mission, cut on the beat (F4). One carried thing through many places → fixed-hero journey (F5). A question answered by a list → catalogue (F3). State the choice at the story check so they can veto it. When two formats fit (a process can be a chronology or a machine), prefer the **proven** one (see FORMATS.md status lines) and say so.
+## Format recommendation and user confirmation
+Analyze the subject against the grammar in FORMATS.md and recommend the most suitable story format with a clear rationale:
+- A history or a process over time → recommend chronology joined by shape morphs (F2).
+- Someone wants something and a helper solves it → recommend mission, cut on the beat (F4).
+- One carried thing through many places → recommend fixed-hero journey (F5).
+- A question answered by a list → recommend catalogue (F3).
+
+Always present your recommended format to the user during the story check-in and request explicit user confirmation or choice before generating assets or scene code. When two formats fit, recommend the proven one (see FORMATS.md status lines) and explain why.
